@@ -22,12 +22,14 @@ $username = $_POST['username'];
 $password = $_POST['password'];
 $email = $_POST['email'];
 $level = 0;
+
 if(isset($username)){
 $qry="SELECT * FROM users WHERE username='$username' AND password='$password' ";
 }
 $result  = mysql_query($qry);
 $member = mysql_fetch_array($result);
-if($member['username']== $username){
+
+if(isset($_POST['username'])&&$member['username']== $username){
 	echo 'Username already exists';
 }
 if(isset($username) && $member['username']!= $username){
@@ -35,10 +37,10 @@ $query_for_taking_username = "insert into users (user_id,username,password,level
 }
 $query_run  = mysql_query($query_for_taking_username);
 
-    if (!mysql_query($query_for_taking_username))
+    if (!mysql_query($query_for_taking_username)&&isset($_POST['username']))
   {
   echo "1 record not added";
-  }else
+  }else if(isset($_POST['username']))
 echo "1 record added";
 
 ?>
