@@ -1,9 +1,9 @@
- <?php session_start(); ?>
+<?php session_start(); ?>
  <html>
  <head>
- 	<title>
- 		Sign-Up
- 	</title>
+  <title>
+    Sign-Up
+  </title>
  </head>
  <body>
  <form action="signup.php" method="POST">
@@ -30,7 +30,7 @@ $result  = mysql_query($qry);
 $member = mysql_fetch_array($result);
 
 if(isset($_POST['username'])&&$member['username']== $username){
-	echo 'Username already exists';
+  echo 'Username already exists';
 }
 if(isset($username) && $member['username']!= $username){
 $query_for_taking_username = "insert into users (user_id,username,password,level,email_id) values ('','$username','$password','$level','$email')";
@@ -39,4 +39,3 @@ $query_run  = mysql_query($query_for_taking_username);
 
     
 ?>
-    

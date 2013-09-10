@@ -12,13 +12,17 @@ $qry="SELECT * FROM users WHERE username='$username' AND password='$password' ";
 $result  = mysql_query($qry);
 
     if ($result>0)
-  {        $_SESSION['MEMBER_USERNAME'] = $username;
+  {       
+       $_SESSION['MEMBER_USERNAME'] = $username;
+       //echo $_SESSION['MEMBER_USERNAME'];
            if(isset($_SESSION['MEMBER_USERNAME']))
-{
-           header("location:ques1.php");
-}			
+              {    if($_SESSION['MEMBER_USERNAME']=="admin"){
+                       header("location:admin.php");
+                   }else
+                   header("location:ques1.php");
+              }			
   }else
-echo "1 record added";
+echo "Your username or password is invalid";
 
 
 ?>

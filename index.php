@@ -2,9 +2,13 @@
 session_start();
 //echo $_SESSION['MEMBER_USERNAME'];
 if(isset($_SESSION['MEMBER_USERNAME']))
-{
-           header("location:ques1.php");
-}           
+{    
+     if($_SESSION['MEMBER_USERNAME']=="admin"){
+                       header("location:admin.php");
+                   }else
+                   header("location:ques1.php");
+}else
+echo "PLEASE LOGIN"           
 ?>
 <html>
 <head>
