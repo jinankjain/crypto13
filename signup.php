@@ -37,11 +37,7 @@ $query_for_taking_username = "insert into users (user_id,username,password,level
 }
 $query_run  = mysql_query($query_for_taking_username);
 
-    if (!mysql_query($query_for_taking_username)&&isset($_POST['username']))
-  {
-  echo "1 record not added";
-  }else if(isset($_POST['username']))
-echo "1 record added";
+    
 
 ?>
     

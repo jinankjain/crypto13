@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 10, 2013 at 09:00 PM
+-- Generation Time: Sep 10, 2013 at 10:08 PM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -41,13 +41,14 @@ CREATE TABLE IF NOT EXISTS `answer` (
 
 CREATE TABLE IF NOT EXISTS `users` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` text NOT NULL,
+  `username` varchar(50) NOT NULL,
   `password` text NOT NULL,
   `level` int(11) NOT NULL,
   `email_id` text NOT NULL,
   PRIMARY KEY (`user_id`),
+  UNIQUE KEY `username` (`username`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=23 ;
 
 --
 -- Dumping data for table `users`
@@ -55,19 +56,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 INSERT INTO `users` (`user_id`, `username`, `password`, `level`, `email_id`) VALUES
 (1, 'jinank', 'jon', 0, 'jinank.rocks@gmail.com'),
-(2, 'jinank', 'jon', 0, 'jinank.rocks@gmail.com'),
-(3, 'jinank', 'joney', 0, 'jinank.rocks@gmail.com'),
-(4, 'jinank', 'joney', 0, 'jinank.rocks@gmail.com'),
-(5, 'jinank123', 'jin', 0, 'jinank@mirage.com'),
-(6, 'jinank123', 'jin', 0, 'jinank@mirage.com'),
-(11, 'jinank3242', 'jin', 0, 'jinank.rocks@gmail.com'),
-(12, 'jinank3242', 'jin', 0, 'jinank.rocks@gmail.com'),
-(13, 'jinank3242', 'jin', 0, 'jinank.rocks@gmail.com'),
-(14, 'jinank3242', 'jin', 0, 'jinank.rocks@gmail.com'),
-(15, 'jodfvds', 'jin', 0, 'jinank@mirage.com'),
-(16, 'jodfvds', 'jin', 0, 'jinank@mirage.com'),
-(17, 'dgdf', 'gfdgd', 0, 'jinank@mirage.com'),
-(18, 'dgdf', 'gfdgd', 0, 'jinank@mirage.com');
+(19, 'jinankjain', 'jin', 0, 'jinank.rocks@gmail.com'),
+(21, 'jj', 'jin', 0, 'jinank.rocks@gmail.com');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
