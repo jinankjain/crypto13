@@ -1,3 +1,11 @@
+<?php 
+session_start();
+//echo $_SESSION['MEMBER_USERNAME'];
+if(isset($_SESSION['MEMBER_USERNAME']))
+{
+           header("location:ques1.php");
+}           
+?>
 <html>
 <head>
     <title>
