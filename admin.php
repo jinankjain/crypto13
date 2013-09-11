@@ -10,6 +10,7 @@
         Enter solution = <input type="text" name="answer"><br>
         <input type="submit" value="submit">
     </form>
+	<a href="logout.php">Logout</a>
 </body>
 </html>
 <?php 

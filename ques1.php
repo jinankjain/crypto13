@@ -53,7 +53,7 @@ header("location:index.php");
 			
 	</head>
 	<body>
-		
+		<a href="logout.php">Logout</a>
 		<div id="base">
 			<img class="fade" src="images/candle.gif">
 		</div>	
