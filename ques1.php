@@ -8,8 +8,11 @@ header("location:index.php");
 
 ?>
 <<<<<<< HEAD
+<<<<<<< HEAD
 <a href="logout.php">Logout</a>
 =======
+=======
+>>>>>>> pr/1
 <html>
 	<head>
 		<title>Crypto 13</title>
@@ -57,10 +60,18 @@ header("location:index.php");
 			
 	</head>
 	<body>
+<<<<<<< HEAD
 		
+=======
+		<a href="logout.php">Logout</a>
+>>>>>>> pr/1
 		<div id="base">
 			<img class="fade" src="images/candle.gif">
 		</div>	
 	</body>
+<<<<<<< HEAD
 </html>
 >>>>>>> 266ce1e9146d11445949a6c207efdd5730bbbc64
+=======
+</html>
+>>>>>>> pr/1

@@ -11,6 +11,7 @@
         <input type="submit" value="submit"><br>
         <a href="logout.php">Logout</a>
     </form>
+	<a href="logout.php">Logout</a>
 </body>
 </html>
 <?php 
