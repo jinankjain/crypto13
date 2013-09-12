@@ -1,0 +1,69 @@
+input
+{
+	float: right;
+}
+input:focus
+{
+	outline:0;
+	box-shadow: 0 0 10px 1px #fff;
+}
+.button
+{
+	background-color:#cdb408;
+	text-indent:0px;
+	display:inline-block;
+	color:#000;
+	font-family:Verdana;
+	font-size:15px;
+	font-weight:bold;
+	height:35px;
+	text-align:center;
+	border:0px;
+}
+.button:hover
+{
+	background-color:#8cb82b;
+}
+.button:active
+{
+	position:relative;
+	top:1px;
+}
+body
+{
+	overflow: hidden;
+	background-color: #000;
+}
+form
+{
+	color:#fff;
+	font-size: 25;
+}
+#base
+{
+	position:fixed;
+	top:0;
+	left:0;
+	background-color:black;
+}
+#base img.fade
+{
+	position:absolute;
+	top:0;
+	display:none;
+	width:100%;
+	height:100%;
+	z-index:-10;
+}
+#userarea
+{
+	padding:20px;
+	background-color: #000;
+	display: box;
+	opacity: 1;
+	box-shadow: 0 0 20px 20px #000;
+	position:fixed;
+	top:0;
+	color:#fff;
+	z-index:1;
+}
