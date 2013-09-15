@@ -2,7 +2,7 @@
 
 session_start();
 include ("connect.php");
-error_reporting(0);
+//error_reporting(0);
 $username = $_POST['username'];
 $password = $_POST['password'];
 $cpassword = $_POST['cpassword'];
@@ -16,7 +16,7 @@ if(isset($username))
 $result  = mysql_query($qry);
 if(mysql_num_rows($result)==1)
 {
-	$error = 'Sorry, Alias already exists!<br>';
+	$error = '<font color="red" size="+1">Sorry, Alias already exists!</font><br>';
 }
 if(isset($username) && isset($password) && isset($cpassword) && isset($email) && mysql_num_rows($result)==0)
 {
@@ -24,21 +24,22 @@ if(isset($username) && isset($password) && isset($cpassword) && isset($email) &&
 	{
 		if($password == $cpassword)
 		{
-			$query_for_taking_username = "INSERT into users (user_id,username,password,level,email_id) values ('','".mysql_real_escape_string($username)."','".mysql_real_escape_string($password)."','$level','".mysql_real_escape_string($email)."'";
+			$query_for_taking_username = "insert into users (user_id,username,password,level,email_id) values ('','".mysql_real_escape_string($username)."','".mysql_real_escape_string($password)."','$level','$email')";
 			if($query_run  = mysql_query($query_for_taking_username))
 			{
-				$error = 'Detective successfully registered.<br>';
+				$error = '<font color="#14d30a" size="+1">Detective successfully registered.</font><br>';
 			}
 			else
 			{
-				$error = 'An error occurred. Try again!<br>';
+				die(mysql_error());
+				$error = '<font color="red" size="+1">An error occurred. Try again!</font><br>';
 			}
 		}
 		else
-			$error = 'Keys don\'t match! Try again.<br>';
+			$error = '<font color="red" size="+1">Keys don\'t match! Try again.</font><br>';
 	}
 	else
-		$error = 'All fields must be validated!<br>';
+		$error = '<font color="red" size="+1">All fields must be validated!</font><br>';
 }
 
 ?>
@@ -67,7 +68,7 @@ if(isset($username) && isset($password) && isset($cpassword) && isset($email) &&
 		</div>
 		<div id="signup">
 			<form action="signup.php" method="POST">
-				<center><font color="red" size="+1"><?php echo $error; ?></font></center><br>
+				<center><?php echo $error; ?></center><br>
 				Username (alias): <input type="text" name="username" value="<?php if(isset($username)) echo $username; ?>" placeholder="username here"><br><br>
 				Password (key): <input type="password" name="password" placeholder="password here"><br><br>
 				Confirm key: <input type="password" name="cpassword" placeholder="password again"><br><br>
@@ -77,3 +78,12 @@ if(isset($username) && isset($password) && isset($cpassword) && isset($email) &&
 		</div>
 	</body>
 </html>
+<?php
+
+if($error == '<font color="#14d30a" size="+1">Detective successfully registered.</font><br>')
+{
+	sleep(2);
+	header('Location: index.php');
+}
+
+?>
