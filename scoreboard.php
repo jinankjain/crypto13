@@ -1,3 +1,13 @@
+<?php
+
+include('connect.php');
+session_start();
+$query_for_taking_data = "SELECT * from users";
+$result = mysql_query($query_for_taking_data);
+$member = mysql_fetch_array($result);
+if(isset($_SESSION['MEMBER_USERNAME']))
+{
+?>
 <html>
 	<head>
 		<title>Scoreboard</title>
@@ -13,30 +23,33 @@
 			.board
 			{
 				width: 50%;
-				display:box;
+				padding: 20px;
+				border: 2px solid #555;
 			}
 		</style>
 	</head>
-<?php 
-include('connect.php');
-$query_for_taking_data = "SELECT * from users";
-$result = mysql_query($query_for_taking_data);
-$member = mysql_fetch_array($result);
-?>
-<center>
-<div class="board">
+	<center>
+		<div class="board">
+			<?php
+				$i = 1;
+			?>
+			<div class="left" style="font-weight:bold;">Detectives</div><div class="right" style="font-weight:bold;">Level</div><br><hr style="height:2px; background-color:#666;">
+			<?php
+				while($member = mysql_fetch_array($result)){
+					echo '<div class="left">'.$i.'. '.$member['username'].'</div>';
+					echo '<div class="right">'.$member['level'].'</div>';
+					echo '<br><hr>';
+					$i += 1;
+				}
+			?>
+		</div>
+	</center>
+</html>
 <?php
-$i = 1;
-?>
-<div class="left">Detectives</div><div class="right">Level</div><br><hr>
-<?php
-while($member = mysql_fetch_array($result)){
-	echo '<div class="left">'.$i.'. '.$member['username'].'</div>';
-	echo '<div class="right">'.$member['level'].'</div>';
-	echo '<br><hr>';
-	$i += 1;
+
+}
+else
+{
+	header("location:index.php");
 }
 ?>
-</div>
-</center>
-</html>

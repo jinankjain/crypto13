@@ -3,12 +3,21 @@
 session_start();
 include ("connect.php");
 //error_reporting(0);
+if(isset($_SESSION['MEMBER_USERNAME']))
+{
+	if($_SESSION['MEMBER_USERNAME']=="admin")
+	{
+		header("location:admin.php");
+	}
+	else
+		header("location:ques.php");
+}
 $username = $_POST['username'];
 $password = $_POST['password'];
 $cpassword = $_POST['cpassword'];
 $email = $_POST['email'];
-$level = 0;
-$error = '<br>';
+$level = 1;
+$error = '';
 if(isset($username))
 {
 	$qry="SELECT * FROM users WHERE username='".mysql_real_escape_string($username)."'";
@@ -16,7 +25,7 @@ if(isset($username))
 $result  = mysql_query($qry);
 if(mysql_num_rows($result)==1)
 {
-	$error = '<font color="red" size="+1">Sorry, Alias already exists!</font><br>';
+	$error = '<font id="err" color="red" size="+1">Sorry, Alias already exists!</font>';
 }
 if(isset($username) && isset($password) && isset($cpassword) && isset($email) && mysql_num_rows($result)==0)
 {
@@ -27,19 +36,18 @@ if(isset($username) && isset($password) && isset($cpassword) && isset($email) &&
 			$query_for_taking_username = "insert into users (user_id,username,password,level,email_id) values ('','".mysql_real_escape_string($username)."','".mysql_real_escape_string($password)."','$level','$email')";
 			if($query_run  = mysql_query($query_for_taking_username))
 			{
-				$error = '<font color="#14d30a" size="+1">Detective successfully registered.</font><br>';
+				$error = '<font id="err" color="#14d30a" size="+1">Detective successfully registered.<br>Start <a style="color:#ff0;" href="index.php">here</a></font>';
 			}
 			else
 			{
-				die(mysql_error());
-				$error = '<font color="red" size="+1">An error occurred. Try again!</font><br>';
+				$error = '<font id="err" color="red" size="+1">An error occurred. Try again later!</font>';
 			}
 		}
 		else
-			$error = '<font color="red" size="+1">Keys don\'t match! Try again.</font><br>';
+			$error = '<font id="err" color="red" size="+1">Keys don\'t match! Try again.</font>';
 	}
 	else
-		$error = '<font color="red" size="+1">All fields must be validated!</font><br>';
+		$error = '<font id="err" color="red" size="+1">All fields must be validated!</font>';
 }
 
 ?>
@@ -68,22 +76,13 @@ if(isset($username) && isset($password) && isset($cpassword) && isset($email) &&
 		</div>
 		<div id="signup">
 			<form action="signup.php" method="POST">
-				<center><?php echo $error; ?></center><br>
+				<center><?php echo $error; ?><br></center><br>
 				Username (alias): <input type="text" name="username" value="<?php if(isset($username)) echo $username; ?>" placeholder="username here"><br><br>
 				Password (key): <input type="password" name="password" placeholder="password here"><br><br>
 				Confirm key: <input type="password" name="cpassword" placeholder="password again"><br><br>
 				Email: <input type="email" name="email" value="<?php if(isset($email)) echo $email; ?>" placeholder="email_id here"><br><br>
-				<input class="button" type="submit" value="Register Me">
+				<input class="button" onclick="check_redir()" type="submit" value="Register Me">
 			</form>
 		</div>
 	</body>
 </html>
-<?php
-
-if($error == '<font color="#14d30a" size="+1">Detective successfully registered.</font><br>')
-{
-	sleep(2);
-	header('Location: index.php');
-}
-
-?>
