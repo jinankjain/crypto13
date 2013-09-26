@@ -1,17 +1,30 @@
-<?php session_start();
-error_reporting(0);
+<?php
+
+session_start();
+require ("connect.php");
+
 if(isset($_SESSION['MEMBER_USERNAME']))
-{    
-     echo "gfdgssdfdsg";
-}else 
-header("location:index.php");
-
+{
+	$username = $_SESSION['MEMBER_USERNAME'];
+	$qry="SELECT * FROM users WHERE username='".mysql_real_escape_string($username)."'";
+	if($query_run  = mysql_query($qry))
+	{
+		$member = mysql_fetch_array($query_run);
+	}
+	else
+	{
+		die(mysql_error());
+	}
+}
+else
+{
+	header("Location: index.php");
+}
+	
 ?>
-
-
 <html>
 	<head>
-		<title>Crypto 13</title>
+		<title>Clue <?php echo ': '.$member['level']; ?></title>
 		<meta charset="utf-8">
 		
 		<script type="text/javascript" src="js/jquery-10.js"></script>
@@ -56,24 +69,9 @@ header("location:index.php");
 			
 	</head>
 	<body>
-
 		<a href="logout.php">Logout</a>
-<font color="white"><p>
-<?php 
-$username = $_SESSION['MEMBER_USERNAME'];
-$query_for_taking_level = "SELECT * FROM users";
-$query_run = mysql_query($query_for_taking_level);
-$result = mysql_fetch_array($query_run);
-$curr_level = $result['level'];
-
-?>
-
-</p></font>
-jinank
 		<div id="base">
 			<img class="fade" src="images/candle.gif">
 		</div>	
 	</body>
-
 </html>
-

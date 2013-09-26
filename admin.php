@@ -8,8 +8,7 @@
         Enter level number = <input type="text" name="level_no"><br>
         Enter level name = <input type="text" name="level_name"><br>
         Enter solution = <input type="text" name="answer"><br>
-        <input type="submit" value="submit"><br>
-        <a href="logout.php">Logout</a>
+        <input type="submit" value="submit">
     </form>
 	<a href="logout.php">Logout</a>
 </body>

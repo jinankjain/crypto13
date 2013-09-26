@@ -2,158 +2,87 @@
 
 session_start();
 include ("connect.php");
-error_reporting(0);
+//error_reporting(0);
+if(isset($_SESSION['MEMBER_USERNAME']))
+{
+	if($_SESSION['MEMBER_USERNAME']=="admin")
+	{
+		header("location:admin.php");
+	}
+	else
+		header("location:ques.php");
+}
 $username = $_POST['username'];
 $password = $_POST['password'];
 $cpassword = $_POST['cpassword'];
 $email = $_POST['email'];
-$level = 0;
-$error = '<br>';
+$level = 1;
+$error = '';
 if(isset($username))
 {
-
+	$qry="SELECT * FROM users WHERE username='".mysql_real_escape_string($username)."'";
 }
 $result  = mysql_query($qry);
-$member = mysql_fetch_array($result);
 if(mysql_num_rows($result)==1)
 {
-
-	$error = 'Sorry, Alias already exists!<br>';
+	$error = '<font id="err" color="red" size="+1">Sorry, Alias already exists!</font>';
 }
 if(isset($username) && isset($password) && isset($cpassword) && isset($email) && mysql_num_rows($result)==0)
 {
 	if(!empty($username) && !empty($password) && !empty($cpassword) && !empty($email))
 	{
-		$query_for_taking_username = "insert into users (user_id,username,password,level,email_id) values ('','".mysql_real_escape_string($username)."','".mysql_real_escape_string($password)."','$level','$email')";
-		if($query_run  = mysql_query($query_for_taking_username))
+		if($password == $cpassword)
 		{
-			$error = 'Detective successfully registered.<br>';
+			$query_for_taking_username = "insert into users (user_id,username,password,level,email_id) values ('','".mysql_real_escape_string($username)."','".mysql_real_escape_string($password)."','$level','$email')";
+			if($query_run  = mysql_query($query_for_taking_username))
+			{
+				$error = '<font id="err" color="#14d30a" size="+1">Detective successfully registered.<br>Start <a style="color:#ff0;" href="index.php">here</a></font>';
+			}
+			else
+			{
+				$error = '<font id="err" color="red" size="+1">An error occurred. Try again later!</font>';
+			}
 		}
 		else
-		{
-			$error = 'An error occurred. Try again!<br>';
-		}
+			$error = '<font id="err" color="red" size="+1">Keys don\'t match! Try again.</font>';
 	}
 	else
-		$error = 'All fields must be validated!<br>';
-
+		$error = '<font id="err" color="red" size="+1">All fields must be validated!</font>';
 }
 
 ?>
 <html>
-
 	<head>
 		<title>New Detective</title>
-		<style>
-			input
-			{
-				float: right;
-			}
-			input:focus
-			{
-				outline:0;
-				box-shadow: 0 0 10px 1px #fff;
-			}
-			.button
-			{
-				background-color:#cdb408;
-				text-indent:0px;
-				display:inline-block;
-				color:#000;
-				font-family:Verdana;
-				font-size:15px;
-				font-weight:bold;
-				height:35px;
-				text-align:center;
-				border:0px;
-			}
-			.button:hover
-			{
-				background-color:#8cb82b;
-			}
-			.button:active
-			{
-				position:relative;
-				top:1px;
-			}
-			body
-			{
-				overflow: hidden;
-				background-color: #000;
-			}
-			form
-			{
-				color:#fff;
-				font-size: 20;
-			}
-			#base
-			{
-				position:fixed;
-				top:0;
-				left:0;
-				background-color:black;
-			}
-			#base img.fade
-			{
-				position:absolute;
-				top:0;
-				display:none;
-				width:100%;
-				height:100%;
-				z-index:-10;
-			}
-			#userarea
-			{
-				padding:20px;
-				background-color: #000;
-				display: box;
-				opacity: 1;
-				box-shadow: 0 0 20px 20px #000;
-				position:fixed;
-				top:0;
-				color:#fff;
-				z-index:1;
-			}
-
-		</style>
+		
+		<link href="css/home_style.css" rel="stylesheet" type="text/css">
 		
 		<script type="text/javascript" src="js/jquery-10.js"></script>
 		<script type="text/javascript" src="js/jquery-migrate-1.2.1.min.js"></script>
 		<script type="text/javascript">
 			$(window).load(function()
 			{
-				$("#userarea form").hide();
 				var dg_H = $(window).height();
 				var dg_W = $(window).width();
 				$('#base').css({'height':dg_H,'width':dg_W});
-				$('#userarea').css({'height':dg_H/2.5,'width':dg_W/4,'top':3*dg_H/10-20,'left':3*dg_W/8});
-				function appear()
-				{
-					$("#base img").first().fadeIn(2000);
-				}
-				appear();
-				setTimeout(function ()
-				{
-					$("#userarea form").fadeIn(2000);
-				},1000);
+				$('#signup').css({'height':dg_H/2,'width':dg_W/3.4,'top':0.8*dg_H/4,'left':12*dg_W/34});
 			})
-			$(window).resize(function(){window.location.href=window.location.href})
+			//$(window).resize(function(){window.location.href=window.location.href})
 		</script>
 	</head>
 	<body>
 		<div id="base">
 			<img class="fade" src="images/bgraw.jpg">
 		</div>
-		<div id="userarea">
+		<div id="signup">
 			<form action="signup.php" method="POST">
-				<center><font color="red" size="+1"><?php echo $error; ?></font></center><br>
-				Username (alias): <input type="text" name="username"><br><br>
-				Password (key): <input type="password" name="password"><br><br>
-				Confirm password: <input type="password" name="cpassword"><br><br>
-				Email: <input type="email" name="email"><br><br>
-				<input class="button" type="submit" value="Submit" >
+				<center><?php echo $error; ?><br></center><br>
+				Username (alias): <input type="text" name="username" value="<?php if(isset($username)) echo $username; ?>" placeholder="username here"><br><br>
+				Password (key): <input type="password" name="password" placeholder="password here"><br><br>
+				Confirm key: <input type="password" name="cpassword" placeholder="password again"><br><br>
+				Email: <input type="email" name="email" value="<?php if(isset($email)) echo $email; ?>" placeholder="email_id here"><br><br>
+				<input class="button" onclick="check_redir()" type="submit" value="Register Me">
 			</form>
 		</div>
 	</body>
-
 </html>
